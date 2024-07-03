@@ -5,9 +5,19 @@
 
 import { connect } from 'cloudflare:sockets';
 
+function generateUUID() {
+var d = new Date().getTime();
+var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  var r = (d + Math.random()*16)%16 | 0;
+  d = Math.floor(d/16);
+  return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+});
+return uuid;
+};
+
 // How to generate your own UUID:
 // https://www.uuidgenerator.net/
-let userID = '89b3cbba-e6ac-485a-9481-976a0415eab9';
+let userID = generateUUID();
 
 // https://www.nslookup.io/domains/cdn.xn--b6gac.eu.org/dns-records/
 // https://www.nslookup.io/domains/cdn-all.xn--b6gac.eu.org/dns-records/
@@ -21,6 +31,8 @@ let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
 let dohURL = 'https://cloudflare-dns.com/dns-query';
 
 let panelVersion = '2.4.3';
+
+
 
 if (!isValidUUID(userID)) {
     throw new Error('uuid is not valid');
